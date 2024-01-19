@@ -1,5 +1,5 @@
 import { expect, describe, it } from "vitest";
-import { AgedItem, Item, LegendaryItem } from "./utils/items.js";
+import { AgedItem, ConjuredItem, Item, LegendaryItem, TicketItem } from "./utils/items.js";
 import { items, updateQuality } from "./gilded-rose.js";
 
 describe("updateQuality", () => {
@@ -71,67 +71,76 @@ describe("updateQuality", () => {
   
 });
 
-// describe("Backstage Passes Handling",() =>{
-//   it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by one  if over 10 days", () => {
-//     const testItem = new Item('Backstage passes to a TAFKAL80ETC concert', 11,12);
-//     items.push(testItem);
+describe("Backstage Passes Handling",() =>{
+  it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by one  if over 10 days", () => {
+    const testItem = new TicketItem('Backstage passes to a TAFKAL80ETC concert', 11,12);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(13);
-//     expect(testItem.sellIn).toBe(10);
-//   });
+    expect(testItem.quality).toBe(13);
+    expect(testItem.sellIn).toBe(10);
+  });
 
-//   it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by 2 when 10days or less", () => {
-//     const testItem = new Item('Backstage passes to a TAFKAL80ETC concert', 10,12);
-//     items.push(testItem);
+  it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by 2 when 10days or less", () => {
+    const testItem = new TicketItem('Backstage passes to a TAFKAL80ETC concert', 10,12);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(14);
-//     expect(testItem.sellIn).toBe(9);
-//   });
+    expect(testItem.quality).toBe(14);
+    expect(testItem.sellIn).toBe(9);
+  });
   
-//   it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by 3 when 5days or less", () => {
-//     const testItem = new Item('Backstage passes to a TAFKAL80ETC concert', 5,12);
-//     items.push(testItem);
+  it("'Backstage passes to a TAFKAL80ETC concert' increase in quality by 3 when 5days or less", () => {
+    const testItem = new TicketItem('Backstage passes to a TAFKAL80ETC concert', 5,12);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(15);
-//     expect(testItem.sellIn).toBe(4);
-//   });
+    expect(testItem.quality).toBe(15);
+    expect(testItem.sellIn).toBe(4);
+  });
 
-//   it("'Backstage passes to a TAFKAL80ETC concert' drops  to 0 after concert", () => {
-//     const testItem = new Item('Backstage passes to a TAFKAL80ETC concert', 0,48);
-//     items.push(testItem);
+  it("'Backstage passes to a TAFKAL80ETC concert' drops  to 0 after concert", () => {
+    const testItem = new TicketItem('Backstage passes to a TAFKAL80ETC concert', -1,48);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(0);
-//     expect(testItem.sellIn).toBe(-1);
-//   });
+    expect(testItem.quality).toBe(0);
+    expect(testItem.sellIn).toBe(-2);
+  });
 
-//   it("'Backstage passes to a TAFKAL80ETC concert' doesn't increase above 50", () => {
-//     const testItem = new Item('Backstage passes to a TAFKAL80ETC concert', 5,49);
-//     items.push(testItem);
+  it("'Backstage passes to a TAFKAL80ETC concert' doesn't increase above 50", () => {
+    const testItem = new TicketItem('Backstage passes to a TAFKAL80ETC concert', 5,49);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(50);
-//     expect(testItem.sellIn).toBe(4);
-//   });
+    expect(testItem.quality).toBe(50);
+    expect(testItem.sellIn).toBe(4);
+  });
 
-//})
+})
 
-// describe("Conjured Items",() =>{
-//   it("'Conjured' items decrease twice as fast", () => {
-//     const testItem = new Item('Conjured baby', 10,49);
-//     items.push(testItem);
+describe("Conjured Items",() =>{
+  it("'Conjured' items decrease twice as fast", () => {
+    const testItem = new ConjuredItem('Conjured baby', 10,49);
+    items.push(testItem);
 
-//     updateQuality();
+    updateQuality();
 
-//     expect(testItem.quality).toBe(47);
-//     expect(testItem.sellIn).toBe(9);
-//   });
-// })
+    expect(testItem.quality).toBe(47);
+    expect(testItem.sellIn).toBe(9);
+  });
+  it("'Conjured' items decrease twice as fast and not go below 0", () => {
+    const testItem = new ConjuredItem('Conjured baby', -1,3);
+    items.push(testItem);
+
+    updateQuality();
+
+    expect(testItem.quality).toBe(0);
+    expect(testItem.sellIn).toBe(-2);
+  });
+})
