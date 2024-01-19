@@ -19,30 +19,18 @@ export class Item {
   }
 
 export class AgedItem extends Item{
-    constructor(name, sellIn, quality){
-      super(name, sellIn, quality)
-    }
-
     nextDay(){
       super.nextDay(-1)
     }
 }
 
 export class LegendaryItem extends Item{
-  constructor(name, sellIn, quality){
-    super(name, sellIn, quality);
-  }
-
   nextDay(){
     //do nothing
   }
 }
 
 export class TicketItem extends Item{
-  constructor(name, sellIn, quality){
-    super(name, sellIn, quality);
-  }
-
   nextDay(){
     if(this.sellIn < 0){
       this.quality=0
@@ -58,10 +46,6 @@ export class TicketItem extends Item{
 }
 
 export class ConjuredItem extends Item{
-  constructor(name, sellIn, quality){
-    super(name, sellIn, quality);
-  }
-
   nextDay(){
     super.nextDay(2)
   }
